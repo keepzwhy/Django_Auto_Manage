@@ -1,0 +1,156 @@
+{% extends 'layout.html' %}
+{% block css %}
+    .left_bor {
+    display: inline-block;
+    margin-top: -20px;
+    height: 678px;
+    width: 300px;
+    }
+
+    .left_list {
+    font-size: 17px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    }
+    .hide {
+    display: none;
+    }
+    .frame {
+    display: inline-block;
+    height: 640px;
+    width: 1200px;
+    margin-right: 30px;
+    margin-top: -10px;
+    float: right;
+    clear: both;
+    }
+{% endblock %}
+{% block content %}
+    <!--左侧列表-->
+    <div class="left_bor">
+        <div>
+            <div>
+                <div class="list-group left_list">
+                    <a href="#" class="list-group-item active disabled">
+                        <span class="glyphicon glyphicon-scale" aria-hidden="true"></span>
+                        仪表盘
+                    </a>
+                    <a href="#" class="list-group-item" onclick="clickme(this)">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        动态监控
+                    </a>
+                    <div class="hide">
+                        <a href="/monitor/cpu/" class="list-group-item" style="background-color: #b9def0">CPU监控</a>
+                        <a href="/monitor/mem/" class="list-group-item" style="background-color: #b9def0">内存监控</a>
+                    </div>
+                    <a href="#" class="list-group-item ">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                        进程管理
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--边框-->
+    <div class="frame">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <div class="container">
+                    <h4 style="width: 100px">进程管理</h4>
+                    <div class="col-lg-4" style="float: right;clear: both">
+                        <form method="get">
+                            <div class="input-group">
+                                <input type="text" name="q" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                            <button class="btn btn-default" type="submit">
+                                <span class="glyphicon glyphicon-search" aria-hidden="true"></span>
+                            </button>
+                        </span>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-body">
+                {#进程表格#}
+                <table class="table table-hover table-condensed table-bordered">
+                    <thead>
+                    <tr>
+                        <th>USER</th>
+                        <th>PID</th>
+                        <th>%CPU</th>
+                        <th>%MEM</th>
+                        <th>VSZ</th>
+                        <th>RSS</th>
+                        <th>TTY</th>
+                        <th>STAT</th>
+                        <th>START</th>
+                        <th>TIME</th>
+                        <th>COMMAND</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for process in process_info_list %}
+                        <tr>
+                            {% for info in process %}
+                                <td>{{ info }}</td>
+                            {% endfor %}
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+                {% if filtered_list %}
+                    <table class="table table-hover table-condensed table-bordered">
+                        <thead>
+                        <h4>搜索结果</h4>
+                        <tr>
+                            <th>USER</th>
+                            <th>PID</th>
+                            <th>%CPU</th>
+                            <th>%MEM</th>
+                            <th>VSZ</th>
+                            <th>RSS</th>
+                            <th>TTY</th>
+                            <th>STAT</th>
+                            <th>START</th>
+                            <th>TIME</th>
+                            <th>COMMAND</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for item in filtered_list %}
+                            <tr>
+                                {% for search in item %}
+                                    <td>{{ search }}</td>
+                                {% endfor %}
+                            </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                {% endif %}
+            </div>
+        </div>
+        {#分页#}
+        <nav aria-label="Page navigation">
+            <ul class="pagination">
+                {{ page_string }}
+            </ul>
+        </nav>
+    </div>
+{% endblock %}
+{% block js %}
+    <!--左侧列表点击出现更多选项-->
+    <script>
+        function clickme(self) {
+            let havehide = $(self).next().hasClass("hide")
+            if (havehide) {
+                $(self).next().removeClass("hide")
+            } else {
+                $(self).next().addClass("hide")
+            }
+        }
+    </script>
+
+{% endblock %}

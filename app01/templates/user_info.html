@@ -1,0 +1,37 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container">
+    <div>
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <span>用户资料</span>
+            </div>
+            <table class="table table-bordered">
+                <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>年龄</th>
+                    <th>性别</th>
+                    <th>部门</th>
+                    <th>入职时间</th>
+                </tr>
+                </thead>
+                <tbody>
+                {% for user in info %}
+                <tr>
+                    <th>{{ user.user_name }}</th>
+                    <td>{{ user.user_age }}</td>
+                    <td>{{ user.get_user_gender_display }}</td>
+                    <td>{{ user.get_user_depart_display }}</td>
+                    <td>{{ user.user_time|date:"Y-m-d" }}</td>
+                    <td>
+                        <a class="btn btn-primary btn-xs" href="/user/edit/{{ user.user_name }}">编辑</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

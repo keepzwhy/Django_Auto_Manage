@@ -1,0 +1,31 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <span>服务器配置</span>
+                </div>
+                <table class="table table-bordered">
+                    <thead>
+                    <tr>
+                        <th>IP</th>
+                        <th>CPU</th>
+                        <th>内存</th>
+                        <th>存储</th>
+
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr>
+                        <td>{{ server_info.0 }}</td>
+                        <td>{{ server_info.1 }}</td>
+                        <td>{{ server_info.2 }}</td>
+                        <td>{{ server_info.3 }}</td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}

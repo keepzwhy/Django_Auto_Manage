@@ -1,0 +1,98 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户登录界面</title>
+    <link rel="stylesheet" href={% static 'plugins/bootstrap-3.4.1/css/bootstrap.css' %}>
+    <style>
+        body {
+            background-color: #8ea4f8;
+            background-image: url('{% static 'img/bk.jpg' %}');
+            background-repeat: no-repeat;
+            background-size: cover;
+
+        }
+
+        .login_box {
+            width: 400px;
+            height: 400px;
+            background-color: #fff;
+            margin: auto;
+            margin-top: 150px;
+            border-radius: 5px;
+            overflow: hidden;
+        }
+
+        .title {
+            text-align: center;
+            font-size: 28px;
+            color: #000;
+            margin-top: 80px;
+            margin-bottom: 10px;
+            letter-spacing: 3px;
+            font-family: sans-serif;
+        }
+
+        .input_box {
+            width: 300px;
+            height: 30px;
+            padding-left: 10px;
+            margin-top: 20px;
+            margin-left: 50px;
+        }
+
+        .button_box {
+            width: 300px;
+            height: 35px;
+            margin-top: 20px;
+            margin-left: 50px;
+            border-radius: 5px;
+            background-color: #64a9d9;
+            cursor: pointer;
+            color: #fff;
+        }
+
+        .logo_box {
+            position: absolute;
+            background-color: #fff;
+            width: 115px;
+            height: 115px;
+            border-radius: 100px;
+            top: 100px;
+            left: 46%;
+            text-align: center;
+        }
+
+        .logo_img {
+            float: left;
+            margin-right: 190px;
+            height: 120px;
+            width: 120px;
+        }
+    </style>
+</head>
+<body>
+<div class="logo_box"><img class="logo_img" src="{% static 'img/user.png' %}"></div>
+<div class="login_box">
+    <h1 class="title">欢迎登录</h1>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        <div class="form-group">
+            {{ form.user_name }}
+            <div style="color: red;padding-left: 60px">{{ form.user_name.errors.0 }}</div>
+        </div>
+        <div class="form-group">
+            {{ form.user_password }}
+            <div style="color: red;padding-left: 60px">{{ form.user_password.errors.0 }}</div>
+        </div>
+        <button type="submit" class="button_box">登录</button>
+    </form>
+</div>
+
+
+
+<script src={% static 'js/jquery-3.7.1.min.js' %}></script>
+<script src={% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}></script>
+</body>
+</html>

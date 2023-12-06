@@ -1,0 +1,87 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>自动化监控平台主页</title>
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-datepicker-1.9.0/css/bootstrap-datepicker.css' %}">
+    <link rel="stylesheet" href="{% static 'plugins/bootstrap-3.4.1/css/bootstrap.css' %}">
+    <style>
+        .head {
+            padding: 10px 10px 10px 10px;
+        }
+
+        .navbar {
+            border-radius: 0;
+        }
+
+        {% block css %}
+        {% endblock %}
+    </style>
+</head>
+<body>
+<!--导航条-->
+<div class="bs-example" data-example-id="inverted-navbar">
+    <div class="navbar navbar-inverse">
+        <div class="container-fluid head">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-9" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/show/after/" style="color: #28a4c9">
+                    <span class="glyphicon glyphicon-dashboard" aria-hidden="true"></span>
+                    自动化运维管理平台
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-9">
+                <ul class="nav navbar-nav">
+                    <li class="active"><a href="/show/after/">Home</a></li>
+                    <li><a href="/show/after/">仪表盘</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">安全设置<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/manager">用户管理</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/server/info">服务器配置</a></li>
+                        </ul>
+                    </li>
+                </ul>
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                           aria-expanded="false">用户<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="/user/info">个人资料</a></li>
+                            <li><a href="/change/pwd">修改密码</a></li>
+                            <li><a href="/logon/">注册用户</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="/show/after/">注销</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+<div>
+    {#类似占位符，是其他页面的样式填充到这里#}
+    {% block content %}
+    {% endblock %}
+</div>
+
+
+<script src="{% static 'js/jquery-3.7.1.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-3.4.1/js/bootstrap.min.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-datepicker-1.9.0/js/bootstrap-datepicker.js' %}"></script>
+<script src="{% static 'plugins/bootstrap-datepicker-1.9.0/locales/bootstrap-datepicker.zh-CN.min.js' %}"></script>
+<script src="{% static 'js/echarts.js' %}"></script>
+{% block js %}
+{% endblock %}
+</body>
+</html>
+

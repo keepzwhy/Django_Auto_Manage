@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>修改密码界面</title>
+    <link rel="stylesheet" href="/static/plugins/bootstrap-3.4.1/css/bootstrap.css">
+    <style>
+        .login {
+            width: 450px;
+            height: 300px;
+            border: 1px solid #dddddd;
+            margin-left: auto;
+            margin-right: auto;
+            padding: 15px 20px;
+            margin-top: 150px;
+            /*阴影*/
+            box-shadow: 5px 5px 5px #aaa;
+        }
+        .login h2 {
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+
+<div class="login">
+    <h2>修改用户密码</h2>
+    <form method="post">
+        {% csrf_token %}
+        <div class="form-group">
+            <label>用户名</label>
+            {{ form.user_name }}
+        </div>
+        <div class="form-group">
+            <label for="id_user_password">新密码</label>
+            {{ form.user_password }}
+        </div>
+        <button type="submit" class="btn btn-primary btn-lg btn-block">提 交</button>
+    </form>
+</div>
+
+{% if error_message %}
+<script>
+    // 如果有错误信息，则触发弹窗事件
+    confirm('{{ error_message }}');
+</script>
+{% endif %}
+
+<script src="/static/js/jquery-3.7.1.min.js"></script>
+<script src="/static/plugins/bootstrap-3.4.1/js/bootstrap.min.js"></script>
+</body>
+</html>

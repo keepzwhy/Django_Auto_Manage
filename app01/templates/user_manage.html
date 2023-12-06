@@ -1,0 +1,72 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <form method="post">
+            {% csrf_token %}
+            <div style="margin-bottom: 10px">
+                <a class="btn btn-primary" href="/new/built/user/">新建用户</a>
+            </div>
+            <div>
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <span>用户列表</span>
+                    </div>
+
+                    <table class="table table-bordered">
+                        <thead>
+                        <tr>
+                            <th>用户名</th>
+                            <th>所属组</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr>
+                            {% for user_group in users_groups %}
+                                <tr>
+                                    <td>{{ user_group.user }}</td>
+
+                                    {% for group in user_group.groups %}
+                                        <td>{{ group }}</td>
+                                    {% endfor %}
+                                    <td style="width: 140px">
+                                        <a class="btn btn-primary btn-xs"
+                                           href="/service/user/edit/{{ user_group.user }}">编 辑</a>
+                                        <button type="button" class="btn btn-danger btn-xs"
+                                                onclick="deleteUser('{{ user_group.user }}')">删 除
+                                        </button>
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        function deleteUser(delete_name) {
+            if (confirm("确定要删除用户吗？")) {
+                // 发起AJAX请求
+                $.ajax({
+                    url: '/new/built/user/',
+                    method: 'POST',
+                    data: {'user_group.user': delete_name},
+                    success: function (response) {
+                        // 处理删除成功的逻辑
+                        // 重新加载用户列表或其他操作
+                        location.reload();
+                    },
+                    error: function (xhr, status, error) {
+                        // 处理删除失败的逻辑
+                        // 显示错误消息等
+                    }
+                });
+            } else {
+                // 用户取消删除的逻辑
+            }
+        }
+    </script>
+{% endblock %}

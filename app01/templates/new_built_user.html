@@ -1,0 +1,32 @@
+{% extends 'layout.html' %}
+{% block content %}
+    <div class="container">
+        <form class="form-horizontal" method="post">
+            {% csrf_token %}
+            <div class="form-group">
+                <label class="col-sm-2 control-label">用户名</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="请输入用户名" name="name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">所属组</label>
+                <div class="col-sm-10">
+                    <input type="text" class="form-control" placeholder="请输入所属组" name="group">
+                    <div style="color: red">{{ message }}</div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="col-sm-2 control-label">用户密码</label>
+                <div class="col-sm-10">
+                    <input type="password" class="form-control" placeholder="请输入用户密码" name="password">
+                </div>
+            </div>
+            <div class="form-group">
+                <div class="col-sm-offset-2 col-sm-10">
+                    <button type="submit" class="btn btn-info">添 加</button>
+                </div>
+            </div>
+        </form>
+    </div>
+{% endblock %}

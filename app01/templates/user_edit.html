@@ -1,0 +1,45 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+.logon {
+    width: 900px;
+    height: 500px;
+    border: 1px solid #dddddd;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 20px;
+    margin-top: 50px;
+    /*阴影*/
+    box-shadow: 5px 5px 5px 5px #aaa;
+}
+
+.logon h2 {
+    text-align: center;
+}
+{% endblock %}
+
+{% block content %}
+<div class="logon">
+    <h2>修改个人资料</h2>
+    <form method="post" novalidate>
+        {% csrf_token %}
+        {% for field in form %}
+            <div class="form-group">
+                <label for="{{ field.id_for_label }}">{{ field.label }}</label>
+                {{ field }}
+                <span style="color: red">{{ field.errors.0 }}</span>
+            </div>
+        {% endfor %}
+        <button type="submit" class="btn btn-primary btn-lg btn-block">提交</button>
+    </form>
+</div>
+{% endblock %}
+
+{% block js %}
+<script>
+    flatpickr("#id_user_time", {
+        dateFormat: "Y-m-d",
+        minDate: "today"
+    });
+</script>
+{% endblock %}

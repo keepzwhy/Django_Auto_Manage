@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+{% block css %}
+    .logon {
+    width: 900px;
+    height: 650px;
+    border: 1px solid #dddddd;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 15px 20px;
+    margin-top: 50px;
+    /*阴影*/
+    box-shadow: 5px 5px 5px 5px #aaa;
+    }
+
+    .logon h2 {
+    text-align: center;
+    }
+{% endblock %}
+{% block content %}
+    <div class="logon">
+        <h2>注册用户</h2>
+        <form method="post" novalidate>
+            {% csrf_token %}
+            {% for field in form %}
+                <div class="form-group">
+                    <div class="form-group">
+                        <label>{{ field.label }}</label>
+                        {{ field }}
+                        <span style="color: red">{{ field.errors.0 }}</span>
+                    </div>
+                </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary btn-lg btn-block">提 交</button>
+        </form>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(function () {
+            $('#time').datepicker({
+                format: 'yyyy-mm-dd',
+                startDate: '0',
+                language: "zh-CN",
+                autoclose: true
+            });
+        })
+    </script>
+{% endblock %}

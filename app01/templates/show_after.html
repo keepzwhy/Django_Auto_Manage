@@ -1,0 +1,283 @@
+{% extends 'layout.html' %}
+
+{% block css %}
+    .left_bor {
+    display: inline-block;
+    margin-top: -20px;
+    height: 678px;
+    width: 300px;
+    }
+
+    .left_list {
+    font-size: 17px;
+    padding-left: 10px;
+    padding-top: 10px;
+    padding-right: 10px;
+    padding-bottom: 10px;
+    }
+
+
+    .bottom_panel1 {
+    display: inline-block;
+    height: 400px;
+    width: 565px;
+    margin-left: 335px;
+    margin-top: -440px;
+    float: left;
+    clear: both;
+    }
+
+    .bottom_panel2 {
+    display: inline-block;
+    height: 400px;
+    width: 565px;
+    margin-right: 50px;
+    margin-top: -440px;
+    float: right;
+    clear: both;
+    }
+
+    .hide {
+    display: none;
+    }
+
+    .top_panel1 {
+    height: 200px;
+    width: 370px;
+    display: inline-block;
+    margin-right: 830px;
+    float: right;
+    clear: both;
+    }
+
+    .top_panel2 {
+    height: 200px;
+    width: 370px;
+    display: inline-block;
+    margin-top: -658px;
+    margin-right: 440px;
+    float: right;
+    clear: both;
+    }
+
+    .top_panel3 {
+    height: 200px;
+    width: 370px;
+    display: inline-block;
+    margin-top: -658px;
+    margin-right: 50px;
+    float: right;
+    clear: both;
+    }
+{% endblock %}
+{% block content %}
+    <!--左侧列表-->
+    <div class="left_bor">
+        <div>
+            <div>
+                <div class="list-group left_list">
+                    <a href="#" class="list-group-item active disabled">
+                        <span class="glyphicon glyphicon-scale" aria-hidden="true"></span>
+                        仪表盘
+                    </a>
+                    <a href="#" class="list-group-item" onclick="clickme(this)">
+                        <span class="glyphicon glyphicon-eye-open" aria-hidden="true"></span>
+                        动态监控
+                    </a>
+                    <div class="hide">
+                        <a href="/monitor/cpu/" class="list-group-item" style="background-color: #b9def0">CPU监控</a>
+                        <a href="/monitor/mem/" class="list-group-item" style="background-color: #b9def0">内存监控</a>
+                    </div>
+                    <a href="/process/manager/" class="list-group-item ">
+                        <span class="glyphicon glyphicon-align-left" aria-hidden="true"></span>
+                        进程管理
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--头部面板-->
+    <!-- height: 200px;-->
+    <!--370-->
+    <!--边距20-->
+    <div class="top_panel1">
+        <div class="panel panel-default">
+            <div class="panel-heading">在线用户
+                <span style="color: #0099FF;padding-left: 205px">Local User</span>
+            </div>
+            <div class="panel-body" style="color: #3e8f3e;line-height: 3;font-size: 30px">
+                {{ online_users }} Users
+            </div>
+            <div class="panel-footer" style="line-height: 1.1">
+                <div>总活跃用户
+                    <span style="padding-left: 210px">{{ online_users }}
+                    <span class="glyphicon glyphicon-flag" aria-hidden="true"></span>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="top_panel2">
+        <div class="panel panel-default">
+            <div class="panel-heading">本机进程数
+                <span style="color: #5cb85c;padding-left: 190px">Process ID</span>
+            </div>
+            <div class="panel-body" style="color: #3e8f3e;line-height: 3;font-size: 30px">
+                {{ process }} Process
+            </div>
+            <div class="panel-footer" style="line-height: 1.1">
+                <div>总活进程数
+                    <span style="padding-left: 210px">{{ process }}
+                    <span class="glyphicon glyphicon-bell" aria-hidden="true"></span>
+            </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="top_panel3">
+        <div class="panel panel-default">
+            <div class="panel-heading">当前活跃会话
+                <span style="color: #f2aa25;padding-left: 150px">Local Session</span>
+            </div>
+            <div class="panel-body" style="color: #3e8f3e;line-height: 3;font-size: 30px">
+                {{ online_users }} Session
+            </div>
+            <div class="panel-footer" style="line-height: 1.1">
+                <div>活跃的会话
+                    <span style="padding-left: 210px">{{ online_users }}
+                    <span class="glyphicon glyphicon-user" aria-hidden="true"></span>
+                </span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!--底部面板1-->
+    <div class="bottom_panel1">
+        <div class="panel panel-default">
+            <div class="panel-heading">内存利用率</div>
+            <div class="panel-body">
+                <div id="m1" style="width: 100%;height:326px;">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--底部面板2-->
+    <div class="bottom_panel2">
+        <div class="panel panel-default">
+            <div class="panel-heading">磁盘使用率</div>
+            <div class="panel-body">
+                <div id="m2" style="width: 100%;height:326px;">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+
+    <!--cpu饼状图-->
+    <script type="text/javascript">
+        $(function () {
+            var db_data_json = '{{ db_data_json|safe }}';
+            var db_data_list = JSON.parse(db_data_json);
+            iniPie(db_data_list);
+        })
+
+        // 初始化饼图
+        function iniPie(db_data_list) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('m1'));
+            var option = {
+                title: {
+                    text: '内存利用率占比',
+                    left: 'center'
+                },
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    orient: 'vertical',
+                    left: 'left'
+                },
+                series: [
+                    {
+                        name: '值（单位M）',
+                        type: 'pie',
+                        radius: '50%',
+                        data: db_data_list,
+                        emphasis: {
+                            itemStyle: {
+                                shadowBlur: 10,
+                                shadowOffsetX: 0,
+                                shadowColor: 'rgba(0, 0, 0, 0.5)'
+                            }
+                        }
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
+    </script>
+    <!--磁盘饼状图-->
+    <script type="text/javascript">
+        $(function () {
+            var db_data_json1 = '{{ db_data_json1|safe }}';
+            var db_data_list1 = JSON.parse(db_data_json1);
+            iniPie1(db_data_list1);
+        })
+
+        // 初始化饼图
+        function iniPie1(db_data_list1) {
+            // 基于准备好的dom，初始化echarts实例
+            var myChart = echarts.init(document.getElementById('m2'));
+            var option = {
+                tooltip: {
+                    trigger: 'item'
+                },
+                legend: {
+                    top: '5%',
+                    left: 'center'
+                },
+                series: [
+                    {
+                        name: '挂载点（已用百分比）',
+                        type: 'pie',
+                        radius: ['40%', '70%'],
+                        avoidLabelOverlap: false,
+                        label: {
+                            show: false,
+                            position: 'center'
+                        },
+                        emphasis: {
+                            label: {
+                                show: true,
+                                fontSize: 40,
+                                fontWeight: 'bold'
+                            }
+                        },
+                        labelLine: {
+                            show: false
+                        },
+                        data: db_data_list1,
+                    }
+                ]
+            };
+            myChart.setOption(option);
+        }
+    </script>
+    <!--左侧列表点击出现更多选项-->
+    <script>
+        function clickme(self) {
+            let havehide = $(self).next().hasClass("hide")
+            if (havehide) {
+                $(self).next().removeClass("hide")
+            } else {
+                $(self).next().addClass("hide")
+            }
+        }
+    </script>
+{% endblock %}
+
+
+
