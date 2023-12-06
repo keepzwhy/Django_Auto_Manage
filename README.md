@@ -6,4 +6,4 @@
 ![Image text](https://github.com/keepzwhy/Django_Auto_Manage/blob/main/show.png)
 动态监控
 ![Image text](https://github.com/keepzwhy/Django_Auto_Manage/blob/main/%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7cpu.png)
-![Image text](https://github.com/keepzwhy/Django_Auto_Manage/blob/main/%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7cpu.png)
+![Image text](https://github.com/keepzwhy/Django_Auto_Manage/blob/main/%E5%8A%A8%E6%80%81%E7%9B%91%E6%8E%A7%E5%86%85%E5%AD%98.png)
